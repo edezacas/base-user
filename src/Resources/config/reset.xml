@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing
+        https://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="digital_ascetic_base_user_reset_password_request" path="/reset_password"
+           methods="POST">
+        <default key="_controller">digital_ascetic.base_user.reset_controller::resetPasswordRequest</default>
+    </route>
+
+    <route id="digital_ascetic_base_user_reset_password_check" path="/reset_password/confirm/{token}"
+           methods="GET">
+        <default key="_controller">digital_ascetic.base_user.reset_controller::validateResetPasswordToken</default>
+    </route>
+</routes>

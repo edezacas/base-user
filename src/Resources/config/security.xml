@@ -7,14 +7,14 @@
 
 
     <route id="digital_ascetic_base_user_security_login" path="/login" methods="GET POST">
-        <default key="_controller">digital_ascetic.base_user.security_controller:login</default>
+        <default key="_controller">digital_ascetic.base_user.security_controller::login</default>
     </route>
 
     <route id="digital_ascetic_base_user_security_check" path="/login_check" methods="POST">
-        <default key="_controller">digital_ascetic.base_user.security_controller:check</default>
+        <default key="_controller">digital_ascetic.base_user.security_controller::check</default>
     </route>
 
     <route id="digital_ascetic_base_user_security_logout" path="/logout" methods="GET POST">
-        <default key="_controller">digital_ascetic.base_user.security_controller:logout</default>
+        <default key="_controller">digital_ascetic.base_user.security_controller::logout</default>
     </route>
 </routes>

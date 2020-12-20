@@ -1,5 +1,5 @@
 asc_base_user:
-  resource: "@DigitalAsceticBaseUserBundle/Resources/config/routes.xml"
+  resource: "@DigitalAsceticBaseUserBundle/Resources/config/all.xml"
 
 test_base:
   path:     /testbase

@@ -55,6 +55,14 @@ class AbstractBaseUser implements UserInterface
      */
     protected $salt;
 
+    /**
+     * The tokene generated at requesting reset password
+     *
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $passwordRequestToken;
+
 
     public function getId(): ?int
     {
@@ -68,7 +76,7 @@ class AbstractBaseUser implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string)$this->username;
+        return $this->username;
     }
 
     /**
@@ -78,7 +86,7 @@ class AbstractBaseUser implements UserInterface
      */
     public function getEmail(): string
     {
-        return (string)$this->email;
+        return $this->email;
     }
 
     public function setUsername(string $username): self
@@ -119,7 +127,7 @@ class AbstractBaseUser implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string)$this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -161,6 +169,32 @@ class AbstractBaseUser implements UserInterface
     public function setPlainPassword(string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPasswordRequestToken(): ?string
+    {
+        return $this->passwordRequestToken;
+    }
+
+    /**
+     * @param string $passwordRequestToken
+     * @return $this
+     */
+    public function setPasswordRequestToken(string $passwordRequestToken): self
+    {
+        $this->passwordRequestToken = $passwordRequestToken;
+
+        return $this;
+    }
+
+    public function clearPasswordRequestToken(): self
+    {
+        $this->passwordRequestToken = null;
 
         return $this;
     }

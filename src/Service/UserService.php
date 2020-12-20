@@ -5,7 +5,6 @@ namespace DigitalAscetic\BaseUserBundle\Service;
 
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserService
@@ -15,25 +14,19 @@ class UserService
     /** @var EntityManagerInterface */
     private $em;
 
-    /** @var UserPasswordEncoderInterface */
-    private $userPasswordEncoder;
-
     /** @var string */
     private $class;
 
     /**
      * UserService constructor.
      * @param EntityManagerInterface $em
-     * @param UserPasswordEncoderInterface $userPasswordEncoder
      * @param string $class
      */
     public function __construct(
         EntityManagerInterface $em,
-        UserPasswordEncoderInterface $userPasswordEncoder,
         string $class
     ) {
         $this->em = $em;
-        $this->userPasswordEncoder = $userPasswordEncoder;
         $this->class = $class;
     }
 
@@ -69,12 +62,5 @@ class UserService
         $user->setPassword($newEncodedPassword);
         $this->em->persist($user);
         $this->em->flush();;
-    }
-
-    public function encodeUserPassword(UserInterface $user, $newPassword): void
-    {
-        $encodedPasword = $this->userPasswordEncoder->encodePassword($user, $newPassword);
-
-        $user->setPassword($encodedPasword);
     }
 }

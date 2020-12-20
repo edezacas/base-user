@@ -103,6 +103,72 @@ class BaseUserTest extends WebTestCase
         $this->assertEquals(1, $content->user->id);
     }
 
+    public function testRequestResetPassword()
+    {
+        self::ensureKernelShutdown();
+        $client = self::createClient();
+
+        $client->request(
+            'POST',
+            '/reset_password',
+            [],
+            [],
+            [],
+            json_encode(array('email' => 'test@test.com'))
+        );
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $message = $client->getResponse()->getContent();
+        $content = json_decode($message);
+        $this->assertNotNull($content);
+        $this->assertEquals('ok', $content->data);
+    }
+
+    public function testResetPasswordCheck()
+    {
+        self::ensureKernelShutdown();
+        $client = self::createClient();
+
+        $client->request(
+            'POST',
+            '/reset_password',
+            [],
+            [],
+            [],
+            json_encode(array('email' => 'test@test.com'))
+        );
+
+        /** @var TestUser $user */
+        $user = $this->em->getRepository(TestUser::class)->findOneBy(['email' => 'test@test.com']);
+
+        $token = $user->getPasswordRequestToken();
+
+        $client->request(
+            'GET',
+            '/reset_password/confirm/'.$token
+        );
+
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $message = $client->getResponse()->getContent();
+        $content = json_decode($message);
+        $this->assertNotNull($content);
+        $this->assertTrue($content->data->isTokenValid);
+    }
+
+    public function testErrorRequestResetPasswword()
+    {
+        self::ensureKernelShutdown();
+        $client = self::createClient();
+
+        $client->request(
+            'POST',
+            '/reset_password',
+            [],
+            [],
+            [],
+            json_encode(array('username' => 'test'))
+        );
+        $this->assertSame(Response::HTTP_INTERNAL_SERVER_ERROR, $client->getResponse()->getStatusCode());
+    }
 
     private function importDatabaseSchema()
     {
