@@ -28,6 +28,12 @@
         "symfony/twig-bundle": "^5.2",
         "symfony/yaml": "^5.2"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.fury.io/8wbRFwcPzdATcTofLeQs/digitalascetic/"
+        }
+    ],
     "config": {
         "preferred-install": {
             "*": "dist"
