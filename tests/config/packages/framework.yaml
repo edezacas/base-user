@@ -1,0 +1,10 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+    test: true
+    session:
+        storage_id: 'session.storage.mock_file'
+    php_errors:
+        log: true
+    router:
+        utf8: true
+        resource: '%kernel.project_dir%/tests/config/routing_test.yml'

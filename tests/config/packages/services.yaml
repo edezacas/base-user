@@ -1,0 +1,13 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false
+
+    test.controller:
+        class: DigitalAscetic\BaseUserBundle\Test\Controller\TestController
+
+    da_base_user.test.login.handler:
+        class: DigitalAscetic\BaseUserBundle\Tests\EventListener\LoginSuccessListener
+        arguments: ['@jms_serializer']

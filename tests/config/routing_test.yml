@@ -1,0 +1,6 @@
+asc_base_user:
+  resource: "@DigitalAsceticBaseUserBundle/Resources/config/routes.xml"
+
+test_base:
+  path:     /testbase
+  defaults: { _controller: test_base.controller:baseTestAction }

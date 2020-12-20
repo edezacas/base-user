@@ -1,0 +1,26 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        base_user_provider:
+            id: DigitalAscetic\BaseUserBundle\Security\UserProvider
+
+    encoders:
+        DigitalAscetic\BaseUserBundle\Tests\Entity\TestUser:
+            algorithm: auto
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            lazy: true
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                success_handler: da_base_user.test.login.handler
+                failure_handler: da_base_user.test.login.handler
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }

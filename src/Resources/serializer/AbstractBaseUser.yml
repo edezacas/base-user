@@ -1,0 +1,17 @@
+DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser:
+  properties:
+    id:
+      groups: [ id ]
+      type: integer
+    username:
+      groups: [ user.default ]
+      type: string
+    email:
+      groups: [ user.default ]
+      type: string
+    plainPassword:
+      groups: [ user.default ]
+      type: string
+    roles:
+      groups: [ user.roles ]
+      type: array
