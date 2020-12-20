@@ -44,7 +44,7 @@ class BaseUserTest extends WebTestCase
         $this->em->flush();
     }
 
-    public function testByUsername()
+    public function testLoginByUsername()
     {
         self::ensureKernelShutdown();
         $client = self::createClient();
@@ -57,7 +57,7 @@ class BaseUserTest extends WebTestCase
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
-    public function testByEmail()
+    public function testLoginByEmail()
     {
         self::ensureKernelShutdown();
         $client = self::createClient();
@@ -84,6 +84,10 @@ class BaseUserTest extends WebTestCase
         $this->assertSame(Response::HTTP_UNAUTHORIZED, $client->getResponse()->getStatusCode());
     }
 
+
+    /**
+     * Look at DigitalAscetic\BaseUserBundle\Tests\EventListener\LoginSuccessListener
+     */
     public function testLoginAndSerializer()
     {
         self::ensureKernelShutdown();
