@@ -1,6 +1,6 @@
 {
     "name": "digitalascetic/base-user",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "type": "symfony-bundle",
     "license": "proprietary",
     "description": "Digital Ascetic Base User Bundle",
@@ -14,7 +14,6 @@
     "prefer-stable": true,
     "require": {
         "php": ">=7.2.5",
-        "ext-json": "*",
         "symfony/form": "^4.0|^5.0",
         "symfony/framework-bundle": "^4.0|^5.0",
         "symfony/orm-pack": "2.0.0",
@@ -41,21 +40,6 @@
     "autoload-dev": {
         "psr-4": {
             "DigitalAscetic\\BaseUserBundle\\Tests\\": "tests/"
-        }
-    },
-    "replace": {
-        "symfony/polyfill-ctype": "*",
-        "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php72": "*"
-    },
-    "scripts": {
-    },
-    "conflict": {
-        "symfony/symfony": "*"
-    },
-    "extra": {
-        "symfony": {
-            "allow-contrib": false
         }
     }
 }

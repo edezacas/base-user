@@ -1,5 +1,9 @@
 # CHANGELOG
 
+1.1.2
+-----
+* Fixed composer.json
+
 1.1.1
 -----
 * Fixed composer.json require version.
