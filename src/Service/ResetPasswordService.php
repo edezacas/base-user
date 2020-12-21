@@ -8,7 +8,6 @@ use DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser;
 use DigitalAscetic\BaseUserBundle\Event\BaseUserEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class ResetPasswordService
 {
@@ -54,6 +53,13 @@ class ResetPasswordService
         return bin2hex(random_bytes(32));
     }
 
+
+    /**
+     * This method generate a new password token for requested user
+     *
+     * @param AbstractBaseUser $user
+     * @throws \Exception
+     */
     public function requestResetPassword(AbstractBaseUser $user): void
     {
         /** @var AbstractBaseUser $user */
@@ -68,6 +74,8 @@ class ResetPasswordService
 
 
     /**
+     * Validate is token is valid and assigned to some user
+     *
      * @param string $token
      * @return AbstractBaseUser|bool
      */
@@ -83,18 +91,18 @@ class ResetPasswordService
         return false;
     }
 
-    public function clearPasswordRequestToken(AbstractBaseUser $user): void
-    {
-        $user->clearPasswordRequestToken();
-        $this->em->persist($user);
-        $this->em->flush();
-    }
-
-    public function doResetUserPassword(UserInterface $user, string $newPlainPassword): void
+    /**
+     * Performs reset user password and clear passwordRequestToken
+     *
+     * @param AbstractBaseUser $user
+     * @param string $newPlainPassword
+     */
+    public function doResetUserPassword(AbstractBaseUser $user, string $newPlainPassword): void
     {
         $newPasswordEncoded = $this->userPasswordEncoderService->encodeUserPassword($user, $newPlainPassword);
 
         $user->setPassword($newPasswordEncoded);
+        $user->clearPasswordRequestToken();
         $this->em->persist($user);
         $this->em->flush();
 

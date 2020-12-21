@@ -17,4 +17,9 @@ class ResetPasswordRequestType extends AbstractType
             ->add('email', EmailType::class)
             ->add('send', SubmitType::class);
     }
+
+    public function getBlockPrefix()
+    {
+        return 'ascetic_base_user_reset_password_request';
+    }
 }

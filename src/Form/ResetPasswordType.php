@@ -18,4 +18,9 @@ class ResetPasswordType extends AbstractType
             ->add('password', RepeatedType::class, ['type' => PasswordType::class])
             ->add('submit', SubmitType::class);
     }
+
+    public function getBlockPrefix()
+    {
+        return 'ascetic_base_user_reset_password';
+    }
 }

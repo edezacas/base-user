@@ -44,71 +44,72 @@ class ResetUserPasswordTest extends WebTestCase
         $this->em->flush();
     }
 
-    public function testRequestResetPassword()
+    public function testResetPasswordRequest()
     {
-        self::ensureKernelShutdown();
-        $client = self::createClient();
+        $client = $this->requestResetPassword();
 
-        $client->request(
-            'POST',
-            '/reset_password/request',
-            [],
-            [],
-            [],
-            json_encode(array('email' => 'test@test.com'))
-        );
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-        $message = $client->getResponse()->getContent();
-        $content = json_decode($message);
-        $this->assertNotNull($content);
-        $this->assertEquals('ok', $content->data);
-    }
-
-    public function testResetPasswordCheck()
-    {
-        self::ensureKernelShutdown();
-        $client = self::createClient();
-
-        $client->request(
-            'POST',
-            '/reset_password/request',
-            [],
-            [],
-            [],
-            json_encode(array('email' => 'test@test.com'))
-        );
 
         /** @var TestUser $user */
         $user = $this->em->getRepository(TestUser::class)->findOneBy(['email' => 'test@test.com']);
 
         $token = $user->getPasswordRequestToken();
 
-        $client->request(
-            'GET',
-            '/reset_password/validate/'.$token
-        );
-
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-        $message = $client->getResponse()->getContent();
-        $content = json_decode($message);
-        $this->assertNotNull($content);
-        $this->assertTrue($content->data->isTokenValid);
+        $this->assertNotNull($token);
     }
 
-    public function testErrorRequestResetPasswword()
+    public function testResetPasswordConfirm()
+    {
+        $client = $this->requestResetPassword();
+
+        /** @var TestUser $user */
+        $user = $this->em->getRepository(TestUser::class)->findOneBy(['email' => 'test@test.com']);
+
+        $token = $user->getPasswordRequestToken();
+
+        $crawler = $client->request('GET', '/reset_password/confirm/'.$token);
+
+        // you can also pass an array of field values that overrides the default ones
+        $form = $crawler->filter('form')->form(
+            [
+                'ascetic_base_user_reset_password[password][first]' => '12345678',
+                'ascetic_base_user_reset_password[password][second]' => '12345678',
+            ]
+        );
+
+        // submit the Form object
+        $client->submit($form);
+
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+
+        $this->em->clear();
+
+        /** @var TestUser $user */
+        $user = $this->em->getRepository(TestUser::class)->findOneBy(['email' => 'test@test.com']);
+
+        $token = $user->getPasswordRequestToken();
+
+        $this->assertNull($token);
+    }
+
+    private function requestResetPassword()
     {
         self::ensureKernelShutdown();
         $client = self::createClient();
 
-        $client->request(
-            'POST',
-            '/reset_password/request',
-            [],
-            [],
-            [],
-            json_encode(array('username' => 'test'))
+        $crawler = $client->request('GET', '/reset_password');
+
+        // you can also pass an array of field values that overrides the default ones
+        $form = $crawler->filter('form')->form(
+            [
+                'ascetic_base_user_reset_password_request[email]' => 'test@test.com',
+            ]
         );
-        $this->assertSame(Response::HTTP_INTERNAL_SERVER_ERROR, $client->getResponse()->getStatusCode());
+
+        // submit the Form object
+        $client->submit($form);
+
+        return $client;
     }
 
     private function importDatabaseSchema()
