@@ -1,5 +1,9 @@
 # CHANGELOG
 
+1.1.1
+-----
+* Fixed composer.json require version.
+
 1.1.0
 -----
 * Implemented UserDoctrineSubscriber encoding and persist user password if plainPassword field has value.

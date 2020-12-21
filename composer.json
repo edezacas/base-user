@@ -1,6 +1,6 @@
 {
     "name": "digitalascetic/base-user",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "type": "symfony-bundle",
     "license": "proprietary",
     "description": "Digital Ascetic Base User Bundle",
@@ -55,8 +55,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "5.2.*"
+            "allow-contrib": false
         }
     }
 }
