@@ -1,5 +1,9 @@
 # CHANGELOG
 
+1.2.1
+-----
+* Handle empty username field
+
 1.2.0
 -----
 * Added enabled field to AbstractBaseUser.

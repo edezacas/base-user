@@ -85,6 +85,17 @@ class AbstractBaseUser implements UserInterface
         return $this->username;
     }
 
+
+    /**
+     * This method allow us to handle empty username field
+     *
+     * @return bool
+     */
+    public function isEmptyUsername(): bool
+    {
+        return empty($this->username);
+    }
+
     /**
      * A visual identifier that represents this user.
      *
