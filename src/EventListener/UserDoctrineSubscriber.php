@@ -18,13 +18,18 @@ class UserDoctrineSubscriber implements EventSubscriberInterface
     /** @var UserPasswordEncoderService */
     private $userPasswordEncoder;
 
+    /** @var array */
+    private $config;
+
     /**
      * UserDoctrineSubscriber constructor.
      * @param UserPasswordEncoderService $userPasswordEncoderService
+     * @param array $config
      */
-    public function __construct(UserPasswordEncoderService $userPasswordEncoderService)
+    public function __construct(UserPasswordEncoderService $userPasswordEncoderService, array $config)
     {
         $this->userPasswordEncoder = $userPasswordEncoderService;
+        $this->config = $config;
     }
 
     public function getSubscribedEvents()
@@ -40,6 +45,10 @@ class UserDoctrineSubscriber implements EventSubscriberInterface
         if ($this->isUser($args->getObject())) {
             /** @var AbstractBaseUser $user */
             $user = $args->getObject();
+
+            if ($this->config['user_enabled']) {
+                $user->setEnabled(true);
+            }
 
             $this->updatePassword($user);
         }

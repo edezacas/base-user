@@ -1,2 +1,3 @@
 digital_ascetic_base_user:
     user_class: DigitalAscetic\BaseUserBundle\Tests\Entity\TestUser
+    user_enabled: true

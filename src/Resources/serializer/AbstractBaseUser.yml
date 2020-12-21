@@ -15,3 +15,6 @@ DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser:
     roles:
       groups: [ user.roles ]
       type: array
+    enabled:
+      groups: [ user.default ]
+      type: boolean

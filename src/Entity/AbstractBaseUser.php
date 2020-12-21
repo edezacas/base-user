@@ -63,6 +63,12 @@ class AbstractBaseUser implements UserInterface
      */
     protected $passwordRequestToken;
 
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", options={"default": "0"})
+     */
+    protected $enabled = false;
+
 
     public function getId(): ?int
     {
@@ -118,6 +124,21 @@ class AbstractBaseUser implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @param string $role
+     * @return $this
+     */
+    public function addRole(string $role): self
+    {
+        $role = strtoupper($role);
+
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
 
         return $this;
     }
@@ -195,6 +216,25 @@ class AbstractBaseUser implements UserInterface
     public function clearPasswordRequestToken(): self
     {
         $this->passwordRequestToken = null;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return $this
+     */
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
 
         return $this;
     }

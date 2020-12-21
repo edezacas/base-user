@@ -16,6 +16,8 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->getRootNode()
             ->children()
                 ->scalarNode('user_class')->isRequired()->end()
+                ->scalarNode('firewall_name')->defaultValue('main')->end()
+                ->scalarNode('user_enabled')->defaultFalse()->end()
             ->end()
         ->end();
 

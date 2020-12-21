@@ -19,6 +19,8 @@ class BaseUserTest extends WebTestCase
      */
     private $em;
 
+    /** @var TestUser */
+    private $testUser;
 
     protected function setUp(): void
     {
@@ -31,16 +33,16 @@ class BaseUserTest extends WebTestCase
 
         $this->importDatabaseSchema();
 
-        $testUser = new TestUser();
-        $testUser->setUsername('test');
-        $testUser->setEmail('test@test.com');
+        $this->testUser = new TestUser();
+        $this->testUser->setUsername('test');
+        $this->testUser->setEmail('test@test.com');
 
         /** @var UserPasswordEncoderInterface $encoder */
         $encoder = static::$kernel->getContainer()
             ->get('security.password_encoder');
 
-        $testUser->setPassword($encoder->encodePassword($testUser, 'piripino9030'));
-        $this->em->persist($testUser);
+        $this->testUser->setPassword($encoder->encodePassword($this->testUser, 'piripino9030'));
+        $this->em->persist($this->testUser);
         $this->em->flush();
     }
 

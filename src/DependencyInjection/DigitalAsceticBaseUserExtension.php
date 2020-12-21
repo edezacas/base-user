@@ -7,6 +7,7 @@ namespace DigitalAscetic\BaseUserBundle\DependencyInjection;
 use DigitalAscetic\BaseUserBundle\Controller\ResetController;
 use DigitalAscetic\BaseUserBundle\Controller\SecurityController;
 use DigitalAscetic\BaseUserBundle\EventListener\UserDoctrineSubscriber;
+use DigitalAscetic\BaseUserBundle\Security\UserChecker;
 use DigitalAscetic\BaseUserBundle\Security\UserProvider;
 use DigitalAscetic\BaseUserBundle\Service\ResetPasswordService;
 use DigitalAscetic\BaseUserBundle\Service\UserPasswordEncoderService;
@@ -17,6 +18,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
 
 class DigitalAsceticBaseUserExtension extends Extension implements PrependExtensionInterface
 {
@@ -25,6 +27,10 @@ class DigitalAsceticBaseUserExtension extends Extension implements PrependExtens
         $config = $this->processConfiguration(new Configuration(), $configs);
 
         $userClass = $config['user_class'];
+        $firewallName = $config['firewall_name'];
+        $userEnabled = $config['user_enabled'];
+
+        $container->setParameter('digital_ascetic_base_user.firewall_name', $firewallName);
 
         $userService = new Definition(UserService::class);
         $userService->addArgument(new Reference('doctrine.orm.entity_manager'));
@@ -51,11 +57,21 @@ class DigitalAsceticBaseUserExtension extends Extension implements PrependExtens
         $container->setDefinition(UserProvider::SERVICE_NAME, $userProvider);
         $container->setAlias(UserProvider::class, UserProvider::SERVICE_NAME);
 
+        $userDoctrineConfig = array(
+            'user_enabled' => $userEnabled,
+        );
+
         $userSubscriber = new Definition(UserDoctrineSubscriber::class);
         $userSubscriber->addArgument(new Reference(UserPasswordEncoderService::SERVICE_NAME));
+        $userSubscriber->addArgument($userDoctrineConfig);
         $userSubscriber->addTag('doctrine.event_subscriber');
         $container->setDefinition(UserDoctrineSubscriber::SERVICE_NAME, $userSubscriber);
         $container->setAlias(UserDoctrineSubscriber::class, UserDoctrineSubscriber::SERVICE_NAME);
+
+        $userChecker = new Definition(UserChecker::class);
+        $userChecker->addArgument(new Reference('security.user_checker'));
+        $container->setDefinition(UserChecker::SERVICE_NAME, $userChecker);
+        $container->setAlias(UserChecker::class, UserChecker::SERVICE_NAME);
 
         $container->register('digital_ascetic.base_user.security_controller', SecurityController::class)
             ->setPublic(true)

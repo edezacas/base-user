@@ -43,6 +43,8 @@ class User extends AbstractBaseUser
 ```yaml
 digital_ascetic_base_user:
   user_class: 'App\Entity\User' /// User entity class
+  firewall_name: 'main' /// default
+  user_enabled: false /// default
 ```
 
 #### config/routes.yaml:

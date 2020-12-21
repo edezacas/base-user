@@ -1,5 +1,11 @@
 # CHANGELOG
 
+1.2.0
+-----
+* Added enabled field to AbstractBaseUser.
+* Implemented UserChecker to allow logged in by enabled field.
+* Added config parameters `firewall_name` and `user_enabled`.
+
 1.1.2
 -----
 * Fixed composer.json
