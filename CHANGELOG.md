@@ -1,5 +1,9 @@
 # CHANGELOG
 
+1.1.0
+-----
+* Implemented UserDoctrineSubscriber encoding and persist user password if plainPassword field has value.
+
 1.0.2
 -----
 * Fixed UserProvider implementation of UserProviderInterface versions 4 and 5 incompatibility.

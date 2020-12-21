@@ -6,6 +6,7 @@ namespace DigitalAscetic\BaseUserBundle\DependencyInjection;
 
 use DigitalAscetic\BaseUserBundle\Controller\ResetController;
 use DigitalAscetic\BaseUserBundle\Controller\SecurityController;
+use DigitalAscetic\BaseUserBundle\EventListener\UserDoctrineSubscriber;
 use DigitalAscetic\BaseUserBundle\Security\UserProvider;
 use DigitalAscetic\BaseUserBundle\Service\ResetPasswordService;
 use DigitalAscetic\BaseUserBundle\Service\UserPasswordEncoderService;
@@ -49,6 +50,12 @@ class DigitalAsceticBaseUserExtension extends Extension implements PrependExtens
         $userProvider->addArgument(new Reference(UserService::SERVICE_NAME));
         $container->setDefinition(UserProvider::SERVICE_NAME, $userProvider);
         $container->setAlias(UserProvider::class, UserProvider::SERVICE_NAME);
+
+        $userSubscriber = new Definition(UserDoctrineSubscriber::class);
+        $userSubscriber->addArgument(new Reference(UserPasswordEncoderService::SERVICE_NAME));
+        $userSubscriber->addTag('doctrine.event_subscriber');
+        $container->setDefinition(UserDoctrineSubscriber::SERVICE_NAME, $userSubscriber);
+        $container->setAlias(UserDoctrineSubscriber::class, UserDoctrineSubscriber::SERVICE_NAME);
 
         $container->register('digital_ascetic.base_user.security_controller', SecurityController::class)
             ->setPublic(true)
