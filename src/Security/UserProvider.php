@@ -34,7 +34,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         $this->userService->updatePassword($user, $newEncodedPassword);
     }
 
-    public function loadUserByUsername(string $username)
+    public function loadUserByUsername($username)
     {
         $user = $this->userService->findUser($username);
 
@@ -62,7 +62,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         return $reloadedUser;
     }
 
-    public function supportsClass(string $class)
+    public function supportsClass($class)
     {
         return AbstractBaseUser::class === $class || is_subclass_of($class, AbstractBaseUser::class);
     }
