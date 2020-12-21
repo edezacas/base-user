@@ -8,6 +8,7 @@ use DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser;
 use DigitalAscetic\BaseUserBundle\Event\BaseUserEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ResetPasswordService
 {
@@ -22,19 +23,25 @@ class ResetPasswordService
     /** @var EventDispatcherInterface */
     private $dispatcher;
 
+    /** @var UserPasswordEncoderService */
+    private $userPasswordEncoderService;
+
     /**
      * UserService constructor.
      * @param EntityManagerInterface $em
      * @param EventDispatcherInterface $dispatcher
+     * @param UserPasswordEncoderService $userPasswordEncoderService
      * @param string $class
      */
     public function __construct(
         EntityManagerInterface $em,
         EventDispatcherInterface $dispatcher,
+        UserPasswordEncoderService $userPasswordEncoderService,
         string $class
     ) {
         $this->em = $em;
         $this->dispatcher = $dispatcher;
+        $this->userPasswordEncoderService = $userPasswordEncoderService;
         $this->class = $class;
     }
 
@@ -59,19 +66,38 @@ class ResetPasswordService
         $this->dispatcher->dispatch(new BaseUserEvent($user), BaseUserEvent::USER_RESET_PASSWORD_REQUESTED);
     }
 
-    public function validateResetPasswordToken(string $token): bool
+
+    /**
+     * @param string $token
+     * @return AbstractBaseUser|bool
+     */
+    public function validateResetPasswordToken(string $token)
     {
         /** @var AbstractBaseUser $user */
         $user = $this->em->getRepository($this->class)->findOneBy(['passwordRequestToken' => $token]);
 
         if (isset($user)) {
-            $user->clearPasswordRequestToken();
-            $this->em->persist($user);
-            $this->em->flush();
-
-            return true;
+            return $user;
         }
 
         return false;
+    }
+
+    public function clearPasswordRequestToken(AbstractBaseUser $user): void
+    {
+        $user->clearPasswordRequestToken();
+        $this->em->persist($user);
+        $this->em->flush();
+    }
+
+    public function doResetUserPassword(UserInterface $user, string $newPlainPassword): void
+    {
+        $newPasswordEncoded = $this->userPasswordEncoderService->encodeUserPassword($user, $newPlainPassword);
+
+        $user->setPassword($newPasswordEncoded);
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $this->dispatcher->dispatch(new BaseUserEvent($user), BaseUserEvent::USER_RESET_PASSWORD_SUCCESS);
     }
 }

@@ -23,10 +23,8 @@ class UserPasswordEncoderService
         $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
-    public function encodeUserPassword(UserInterface $user, $newPassword): void
+    public function encodeUserPassword(UserInterface $user, $newPassword): string
     {
-        $encodedPasword = $this->userPasswordEncoder->encodePassword($user, $newPassword);
-
-        $user->setPassword($encodedPasword);
+        return $this->userPasswordEncoder->encodePassword($user, $newPassword);
     }
 }

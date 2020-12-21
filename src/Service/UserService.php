@@ -61,6 +61,6 @@ class UserService
     {
         $user->setPassword($newEncodedPassword);
         $this->em->persist($user);
-        $this->em->flush();;
+        $this->em->flush();
     }
 }

@@ -6,11 +6,21 @@
         https://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="digital_ascetic_base_user_reset_password_request" path="/reset_password"
+           methods="GET POST">
+        <default key="_controller">digital_ascetic.base_user.reset_controller::resetPassword</default>
+    </route>
+
+    <route id="digital_ascetic_base_user_reset_password_check" path="/reset_password/confirm/{token}"
+           methods="GET">
+        <default key="_controller">digital_ascetic.base_user.reset_controller::resetPasswordConfirm</default>
+    </route>
+
+    <route id="digital_ascetic_base_user_reset_password_request" path="/reset_password/request"
            methods="POST">
         <default key="_controller">digital_ascetic.base_user.reset_controller::resetPasswordRequest</default>
     </route>
 
-    <route id="digital_ascetic_base_user_reset_password_check" path="/reset_password/confirm/{token}"
+    <route id="digital_ascetic_base_user_reset_password_check" path="/reset_password/validate/{token}"
            methods="GET">
         <default key="_controller">digital_ascetic.base_user.reset_controller::validateResetPasswordToken</default>
     </route>

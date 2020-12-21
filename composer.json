@@ -15,9 +15,10 @@
     "require": {
         "php": ">=7.2.5",
         "ext-json": "*",
-        "symfony/framework-bundle": "5.2.*",
+        "symfony/form": "^4.0|^5.0",
+        "symfony/framework-bundle": "^4.0|^5.0",
         "symfony/orm-pack": "2.0.0",
-        "symfony/security-bundle": "^5.2"
+        "symfony/security-bundle": "^4.0|^5.0"
     },
     "require-dev": {
         "jms/serializer-bundle": "^3.7",
@@ -28,12 +29,6 @@
         "symfony/twig-bundle": "^5.2",
         "symfony/yaml": "^5.2"
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://repo.fury.io/8wbRFwcPzdATcTofLeQs/digitalascetic/"
-        }
-    ],
     "config": {
         "preferred-install": {
             "*": "dist"

@@ -31,18 +31,19 @@ class DigitalAsceticBaseUserExtension extends Extension implements PrependExtens
         $container->setDefinition(UserService::SERVICE_NAME, $userService);
         $container->setAlias(UserService::class, UserService::SERVICE_NAME);
 
-        $resetService = new Definition(ResetPasswordService::class);
-        $resetService->addArgument(new Reference('doctrine.orm.entity_manager'));
-        $resetService->addArgument(new Reference('event_dispatcher'));
-        $resetService->addArgument($userClass);
-        $container->setDefinition(ResetPasswordService::SERVICE_NAME, $resetService);
-        $container->setAlias(ResetPasswordService::class, ResetPasswordService::SERVICE_NAME);
-
         $passEncoderService = new Definition(UserPasswordEncoderService::class);
-        $userService->addArgument(new Reference('security.password_encoder'));
+        $passEncoderService->addArgument(new Reference('security.password_encoder'));
         $passEncoderService->addArgument($userClass);
         $container->setDefinition(UserPasswordEncoderService::SERVICE_NAME, $passEncoderService);
         $container->setAlias(UserPasswordEncoderService::class, UserPasswordEncoderService::SERVICE_NAME);
+
+        $resetService = new Definition(ResetPasswordService::class);
+        $resetService->addArgument(new Reference('doctrine.orm.entity_manager'));
+        $resetService->addArgument(new Reference('event_dispatcher'));
+        $resetService->addArgument(new Reference(UserPasswordEncoderService::SERVICE_NAME));
+        $resetService->addArgument($userClass);
+        $container->setDefinition(ResetPasswordService::SERVICE_NAME, $resetService);
+        $container->setAlias(ResetPasswordService::class, ResetPasswordService::SERVICE_NAME);
 
         $userProvider = new Definition(UserProvider::class);
         $userProvider->addArgument(new Reference(UserService::SERVICE_NAME));

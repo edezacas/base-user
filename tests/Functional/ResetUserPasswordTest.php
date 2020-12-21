@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class BaseUserTest extends WebTestCase
+class ResetUserPasswordTest extends WebTestCase
 {
 
     /**
@@ -44,67 +44,71 @@ class BaseUserTest extends WebTestCase
         $this->em->flush();
     }
 
-    public function testLoginByUsername()
+    public function testRequestResetPassword()
     {
         self::ensureKernelShutdown();
         $client = self::createClient();
 
         $client->request(
             'POST',
-            '/login_check',
-            ['_username' => "test", "_password" => "piripino9030"]
+            '/reset_password/request',
+            [],
+            [],
+            [],
+            json_encode(array('email' => 'test@test.com'))
         );
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-    }
-
-    public function testLoginByEmail()
-    {
-        self::ensureKernelShutdown();
-        $client = self::createClient();
-
-        $client->request(
-            'POST',
-            '/login_check',
-            ['_username' => "test@test.com", "_password" => "piripino9030"]
-        );
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-    }
-
-    public function testLoginFailure()
-    {
-        self::ensureKernelShutdown();
-        $client = self::createClient();
-
-        $client->request(
-            'POST',
-            '/login_check',
-            ['_username' => "test@test.com", "_password" => "piripino9031"]
-        );
-
-        $this->assertSame(Response::HTTP_UNAUTHORIZED, $client->getResponse()->getStatusCode());
-    }
-
-
-    /**
-     * Look at DigitalAscetic\BaseUserBundle\Tests\EventListener\LoginSuccessListener
-     */
-    public function testLoginAndSerializer()
-    {
-        self::ensureKernelShutdown();
-        $client = self::createClient();
-
-        $client->request(
-            'POST',
-            '/login_check',
-            ['_username' => "test@test.com", "_password" => "piripino9030"]
-        );
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-
         $message = $client->getResponse()->getContent();
         $content = json_decode($message);
         $this->assertNotNull($content);
-        $this->assertNotNull($content->user);
-        $this->assertEquals(1, $content->user->id);
+        $this->assertEquals('ok', $content->data);
+    }
+
+    public function testResetPasswordCheck()
+    {
+        self::ensureKernelShutdown();
+        $client = self::createClient();
+
+        $client->request(
+            'POST',
+            '/reset_password/request',
+            [],
+            [],
+            [],
+            json_encode(array('email' => 'test@test.com'))
+        );
+
+        /** @var TestUser $user */
+        $user = $this->em->getRepository(TestUser::class)->findOneBy(['email' => 'test@test.com']);
+
+        $token = $user->getPasswordRequestToken();
+
+        $client->request(
+            'GET',
+            '/reset_password/validate/'.$token
+        );
+
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $message = $client->getResponse()->getContent();
+        $content = json_decode($message);
+        $this->assertNotNull($content);
+        $this->assertTrue($content->data->isTokenValid);
+    }
+
+    public function testErrorRequestResetPasswword()
+    {
+        self::ensureKernelShutdown();
+        $client = self::createClient();
+
+        $client->request(
+            'POST',
+            '/reset_password/request',
+            [],
+            [],
+            [],
+            json_encode(array('username' => 'test'))
+        );
+        $this->assertSame(Response::HTTP_INTERNAL_SERVER_ERROR, $client->getResponse()->getStatusCode());
     }
 
     private function importDatabaseSchema()

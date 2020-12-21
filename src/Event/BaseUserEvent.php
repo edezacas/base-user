@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class BaseUserEvent
 {
     const USER_RESET_PASSWORD_REQUESTED = "USER_RESET_PASSWORD_REQUESTED";
+    const USER_RESET_PASSWORD_SUCCESS = "USER_RESET_PASSWORD_SUCCESS";
 
     /** @var UserInterface */
     private $user;
