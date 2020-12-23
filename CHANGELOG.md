@@ -1,5 +1,9 @@
 # CHANGELOG
 
+1.2.2
+-----
+* Allow symfony/orm-pack version 2 and upper 
+
 1.2.1
 -----
 * Handle empty username field
