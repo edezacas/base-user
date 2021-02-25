@@ -38,14 +38,25 @@ class User extends AbstractBaseUser
 }
 ```
 
+### Reference
+
 #### config/packages/digital_ascetic_base_user.yaml:
+
+| Property        | Description           | Default  |
+| ------------- |:-------------:| -----:|
+| user_class      | User entity class | required  |
+| firewall_name      | Firewall name to apply security checker      |   main |
+| user_enabled | Default user enabled behaviour; if enabled is false user can't login until is enabled | false |
+
+Example: 
 
 ```yaml
 digital_ascetic_base_user:
-  user_class: 'App\Entity\User' /// User entity class
-  firewall_name: 'main' /// default
-  user_enabled: false /// default
+  user_class: 'App\Entity\User'
+  firewall_name: 'main'
+  user_enabled: true // User is enabled by default
 ```
+### Routing
 
 #### config/routes.yaml:
 
@@ -53,17 +64,17 @@ You must import all BaseUser routes:
 
 ```yaml
 asc_base_user:
-  resource: "@DigitalAsceticBaseUserBundle/Resources/config/all.xml"
+  resource: "@DigitalAsceticBaseUserBundle/Resources/config/routes/all.xml"
 ```
 
 or for example if you don't want reset functionality you can only import:
 
-
-
 ```yaml
 asc_base_user:
-  resource: "@DigitalAsceticBaseUserBundle/Resources/config/security.xml"
+  resource: "@DigitalAsceticBaseUserBundle/Resources/config/routes/security.xml"
 ```
+
+### Security
 
 #### config/packages/security.yaml:
 
@@ -79,6 +90,23 @@ security:
     base_user_provider:
       id: DigitalAscetic\BaseUserBundle\Security\UserProvider
 ```
+
+## Persisting User to Database
+
+To persist user we can simply use DigitalAscetic\BaseUserBundle\Service\UserManagerInterface *updateUser* method, that automatically handle encoding password and enabled behaviour.
+
+### Example
+
+The next code create a testUser entity, and calling *updateUser* method, automatically encode *plainPassword* and store to *password* property. Also depending on *user_enabled* configuration value, set its behaviour.
+
+```php 
+$testUser = new BaseUser();
+$testUser->setUsername('test');
+$testUser->setEmail('test@test.com');
+$testUser->setPlainPassword('12345678');
+$this->userManager->updateUser($testUser);
+```
+
 
 ## Reset Password
 

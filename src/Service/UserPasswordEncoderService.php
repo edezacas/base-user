@@ -15,7 +15,7 @@ class UserPasswordEncoderService
     private $userPasswordEncoder;
 
     /**
-     * UserService constructor.
+     * UserPasswordEncoderService constructor.
      * @param UserPasswordEncoderInterface $userPasswordEncoder
      */
     public function __construct(UserPasswordEncoderInterface $userPasswordEncoder)

@@ -8,24 +8,24 @@ use DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser;
 use DigitalAscetic\BaseUserBundle\Form\ResetPasswordRequestType;
 use DigitalAscetic\BaseUserBundle\Form\ResetPasswordType;
 use DigitalAscetic\BaseUserBundle\Service\ResetPasswordService;
-use DigitalAscetic\BaseUserBundle\Service\UserService;
+use DigitalAscetic\BaseUserBundle\Service\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResetController extends AbstractController
 {
 
-    /** @var UserService */
-    private $userService;
+    /** @var UserManagerInterface */
+    private $userManager;
 
     /** @var ResetPasswordService */
     private $resetPasswordService;
 
     public function __construct(
-        UserService $userService,
+        UserManagerInterface $userManager,
         ResetPasswordService $resetPasswordService
     ) {
-        $this->userService = $userService;
+        $this->userManager = $userManager;
         $this->resetPasswordService = $resetPasswordService;
     }
 
@@ -36,7 +36,7 @@ class ResetController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form->get('email')->getData();
-            $user = $this->userService->findUserBy(['email' => $email]);
+            $user = $this->userManager->findUserBy(['email' => $email]);
 
             if ($user instanceof AbstractBaseUser) {
                 $this->resetPasswordService->requestResetPassword($user);

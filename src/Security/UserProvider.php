@@ -5,7 +5,7 @@ namespace DigitalAscetic\BaseUserBundle\Security;
 
 
 use DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser;
-use DigitalAscetic\BaseUserBundle\Service\UserService;
+use DigitalAscetic\BaseUserBundle\Service\UserManagerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -16,27 +16,27 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
     const SERVICE_NAME = 'digital_ascetic_base_user.security.user_provider';
 
-    /** @var UserService */
-    private $userService;
+    /** @var UserManagerInterface */
+    private $userManager;
 
     /**
      * UserProvider constructor.
-     * @param UserService $userService
+     * @param UserManagerInterface $userManager
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserManagerInterface $userManager)
     {
-        $this->userService = $userService;
+        $this->userManager = $userManager;
     }
 
 
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
     {
-        $this->userService->updatePassword($user, $newEncodedPassword);
+        $this->userManager->upgradePassword($user, $newEncodedPassword);
     }
 
     public function loadUserByUsername($username)
     {
-        $user = $this->userService->findUser($username);
+        $user = $this->userManager->findUser($username);
 
         if (!$user) {
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
@@ -55,7 +55,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
             throw new UnsupportedUserException(sprintf('Invalid user class "%s".', get_class($user)));
         }
 
-        if (null === $reloadedUser = $this->userService->findUserBy(['id' => $user->getId()])) {
+        if (null === $reloadedUser = $this->userManager->findUserBy(['id' => $user->getId()])) {
             throw new UsernameNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
         }
 

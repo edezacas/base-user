@@ -1,5 +1,13 @@
 # CHANGELOG
 
+2.0.0
+-----
+
+* Routing files moved to Resources/config/routes directory.
+* Implemented UserManagerInterface.
+* Changed UserService implementing UserManagerInterface and handling plaiPassword encoding, and enabled value. 
+* Removed UserDoctrineSubscriber; instead of it handle trough UserService::updateUser method.
+
 1.2.2
 -----
 * Allow symfony/orm-pack version 2 and upper 

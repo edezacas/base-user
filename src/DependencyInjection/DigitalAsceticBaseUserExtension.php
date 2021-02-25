@@ -6,24 +6,30 @@ namespace DigitalAscetic\BaseUserBundle\DependencyInjection;
 
 use DigitalAscetic\BaseUserBundle\Controller\ResetController;
 use DigitalAscetic\BaseUserBundle\Controller\SecurityController;
-use DigitalAscetic\BaseUserBundle\EventListener\UserDoctrineSubscriber;
 use DigitalAscetic\BaseUserBundle\Security\UserChecker;
 use DigitalAscetic\BaseUserBundle\Security\UserProvider;
 use DigitalAscetic\BaseUserBundle\Service\ResetPasswordService;
 use DigitalAscetic\BaseUserBundle\Service\UserPasswordEncoderService;
 use DigitalAscetic\BaseUserBundle\Service\UserService;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
 
 class DigitalAsceticBaseUserExtension extends Extension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container)
     {
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
+        $loader->load('services.xml');
+
         $config = $this->processConfiguration(new Configuration(), $configs);
 
         $userClass = $config['user_class'];
@@ -32,17 +38,20 @@ class DigitalAsceticBaseUserExtension extends Extension implements PrependExtens
 
         $container->setParameter('digital_ascetic_base_user.firewall_name', $firewallName);
 
-        $userService = new Definition(UserService::class);
-        $userService->addArgument(new Reference('doctrine.orm.entity_manager'));
-        $userService->addArgument($userClass);
-        $container->setDefinition(UserService::SERVICE_NAME, $userService);
-        $container->setAlias(UserService::class, UserService::SERVICE_NAME);
-
         $passEncoderService = new Definition(UserPasswordEncoderService::class);
         $passEncoderService->addArgument(new Reference('security.password_encoder'));
         $passEncoderService->addArgument($userClass);
         $container->setDefinition(UserPasswordEncoderService::SERVICE_NAME, $passEncoderService);
         $container->setAlias(UserPasswordEncoderService::class, UserPasswordEncoderService::SERVICE_NAME);
+
+        $userService = new Definition(UserService::class);
+        $userService->addArgument(new Reference('doctrine.orm.entity_manager'));
+        $userService->addArgument(new Reference(UserPasswordEncoderService::SERVICE_NAME));
+        $userService->addArgument($userClass);
+        $userService->addArgument($userEnabled);
+        $userService->setPublic(false);
+        $container->setDefinition(UserService::SERVICE_NAME, $userService);
+        $container->setAlias(UserService::class, UserService::SERVICE_NAME);
 
         $resetService = new Definition(ResetPasswordService::class);
         $resetService->addArgument(new Reference('doctrine.orm.entity_manager'));
@@ -60,13 +69,6 @@ class DigitalAsceticBaseUserExtension extends Extension implements PrependExtens
         $userDoctrineConfig = array(
             'user_enabled' => $userEnabled,
         );
-
-        $userSubscriber = new Definition(UserDoctrineSubscriber::class);
-        $userSubscriber->addArgument(new Reference(UserPasswordEncoderService::SERVICE_NAME));
-        $userSubscriber->addArgument($userDoctrineConfig);
-        $userSubscriber->addTag('doctrine.event_subscriber');
-        $container->setDefinition(UserDoctrineSubscriber::SERVICE_NAME, $userSubscriber);
-        $container->setAlias(UserDoctrineSubscriber::class, UserDoctrineSubscriber::SERVICE_NAME);
 
         $userChecker = new Definition(UserChecker::class);
         $userChecker->addArgument(new Reference('security.user_checker'));

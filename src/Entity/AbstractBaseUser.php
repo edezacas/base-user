@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * Class AbstractBaseUser
  * @package DigitalAscetic\BaseUserBundle\Entity
  */
-class AbstractBaseUser implements UserInterface
+abstract class AbstractBaseUser implements UserInterface
 {
 
     /**
@@ -65,9 +65,9 @@ class AbstractBaseUser implements UserInterface
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean", options={"default": "0"})
+     * @ORM\Column(type="boolean", options={"default": 0})
      */
-    protected $enabled = false;
+    protected $enabled;
 
 
     public function getId(): ?int
@@ -232,9 +232,9 @@ class AbstractBaseUser implements UserInterface
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isEnabled(): bool
+    public function isEnabled(): ?bool
     {
         return $this->enabled;
     }

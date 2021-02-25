@@ -26,7 +26,7 @@ class ResetPasswordService
     private $userPasswordEncoderService;
 
     /**
-     * UserService constructor.
+     * ResetPasswordService constructor.
      * @param EntityManagerInterface $em
      * @param EventDispatcherInterface $dispatcher
      * @param UserPasswordEncoderService $userPasswordEncoderService
