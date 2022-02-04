@@ -1,5 +1,10 @@
 # CHANGELOG
 
+
+2.0.1
+-----
+* Fixed dependencies version.
+
 2.0.0
 -----
 
