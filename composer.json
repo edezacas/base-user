@@ -1,6 +1,6 @@
 {
     "name": "digitalascetic/base-user",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "type": "symfony-bundle",
     "license": "proprietary",
     "description": "Digital Ascetic Base User Bundle",

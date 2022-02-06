@@ -1,5 +1,8 @@
 # CHANGELOG
 
+2.0.2
+-----
+* Fixed login template form action login_check.
 
 2.0.1
 -----
