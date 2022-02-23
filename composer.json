@@ -1,6 +1,6 @@
 {
     "name": "edezacas/base-user",
-    "version": "2.0.2",
+    "version": "2.1.0",
     "type": "symfony-bundle",
     "license": "MIT",
     "description": "Provides user management for your Symfony 5 project.",
