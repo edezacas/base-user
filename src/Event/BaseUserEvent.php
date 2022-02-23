@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Event;
+namespace EDC\BaseUserBundle\Event;
 
 
 use Symfony\Component\Security\Core\User\UserInterface;

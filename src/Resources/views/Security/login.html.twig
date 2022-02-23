@@ -2,7 +2,7 @@
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-<form action="{{ path('digital_ascetic_base_user_security_check') }}" method="post">
+<form action="{{ path('edc_base_user_security_check') }}" method="post">
 
     {% if csrf_token is defined and csrf_token is not null %}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />

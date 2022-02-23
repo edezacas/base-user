@@ -7,8 +7,8 @@
 
 
     <import
-            resource="@DigitalAsceticBaseUserBundle/Resources/config/routes/security.xml" />
+            resource="@EDCBaseUserBundle/Resources/config/routes/security.xml" />
 
     <import
-            resource="@DigitalAsceticBaseUserBundle/Resources/config/routes/reset.xml" />
+            resource="@EDCBaseUserBundle/Resources/config/routes/reset.xml" />
 </routes>

@@ -5,13 +5,13 @@
         xsi:schemaLocation="http://symfony.com/schema/routing
         https://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="digital_ascetic_base_user_reset_password_request" path="/reset_password"
+    <route id="edc_base_user_reset_password_request" path="/reset_password"
            methods="GET POST">
-        <default key="_controller">digital_ascetic.base_user.reset_controller::resetPasswordRequest</default>
+        <default key="_controller">edc.base_user.reset_controller::resetPasswordRequest</default>
     </route>
 
-    <route id="digital_ascetic_base_user_reset_password_confirm" path="/reset_password/confirm/{token}"
+    <route id="edc_base_user_reset_password_confirm" path="/reset_password/confirm/{token}"
            methods="GET POST">
-        <default key="_controller">digital_ascetic.base_user.reset_controller::resetPasswordConfirm</default>
+        <default key="_controller">edc.base_user.reset_controller::resetPasswordConfirm</default>
     </route>
 </routes>

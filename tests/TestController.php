@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Tests;
+namespace EDC\BaseUserBundle\Tests;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

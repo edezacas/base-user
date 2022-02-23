@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Form;
+namespace EDC\BaseUserBundle\Form;
 
 
 use Symfony\Component\Form\AbstractType;
@@ -20,6 +20,6 @@ class ResetPasswordRequestType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ascetic_base_user_reset_password_request';
+        return 'edc_base_user_reset_password_request';
     }
 }

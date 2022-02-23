@@ -1,4 +1,4 @@
-DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser:
+EDC\BaseUserBundle\Entity\AbstractBaseUser:
   properties:
     id:
       groups: [ id ]

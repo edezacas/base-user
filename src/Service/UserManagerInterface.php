@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalAscetic\BaseUserBundle\Service;
+namespace EDC\BaseUserBundle\Service;
 
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;

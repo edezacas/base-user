@@ -1,16 +1,16 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\DependencyInjection;
+namespace EDC\BaseUserBundle\DependencyInjection;
 
 
-use DigitalAscetic\BaseUserBundle\Controller\ResetController;
-use DigitalAscetic\BaseUserBundle\Controller\SecurityController;
-use DigitalAscetic\BaseUserBundle\Security\UserChecker;
-use DigitalAscetic\BaseUserBundle\Security\UserProvider;
-use DigitalAscetic\BaseUserBundle\Service\ResetPasswordService;
-use DigitalAscetic\BaseUserBundle\Service\UserPasswordEncoderService;
-use DigitalAscetic\BaseUserBundle\Service\UserService;
+use EDC\BaseUserBundle\Controller\ResetController;
+use EDC\BaseUserBundle\Controller\SecurityController;
+use EDC\BaseUserBundle\Security\UserChecker;
+use EDC\BaseUserBundle\Security\UserProvider;
+use EDC\BaseUserBundle\Service\ResetPasswordService;
+use EDC\BaseUserBundle\Service\UserPasswordEncoderService;
+use EDC\BaseUserBundle\Service\UserService;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 
-class DigitalAsceticBaseUserExtension extends Extension implements PrependExtensionInterface
+class EDCBaseUserExtension extends Extension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -36,7 +36,7 @@ class DigitalAsceticBaseUserExtension extends Extension implements PrependExtens
         $firewallName = $config['firewall_name'];
         $userEnabled = $config['user_enabled'];
 
-        $container->setParameter('digital_ascetic_base_user.firewall_name', $firewallName);
+        $container->setParameter('edc_base_user.firewall_name', $firewallName);
 
         $passEncoderService = new Definition(UserPasswordEncoderService::class);
         $passEncoderService->addArgument(new Reference('security.password_encoder'));
@@ -75,14 +75,14 @@ class DigitalAsceticBaseUserExtension extends Extension implements PrependExtens
         $container->setDefinition(UserChecker::SERVICE_NAME, $userChecker);
         $container->setAlias(UserChecker::class, UserChecker::SERVICE_NAME);
 
-        $container->register('digital_ascetic.base_user.security_controller', SecurityController::class)
+        $container->register('edc.base_user.security_controller', SecurityController::class)
             ->setPublic(true)
             ->addTag('controller.service_arguments')
             ->addArgument(new Reference('security.authentication_utils'))
             ->addArgument(new Reference('security.csrf.token_manager', ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->addMethodCall('setContainer', [new Reference('service_container')]);
 
-        $container->register('digital_ascetic.base_user.reset_controller', ResetController::class)
+        $container->register('edc.base_user.reset_controller', ResetController::class)
             ->setPublic(true)
             ->addTag('controller.service_arguments')
             ->addArgument(new Reference(UserService::SERVICE_NAME))
@@ -98,9 +98,9 @@ class DigitalAsceticBaseUserExtension extends Extension implements PrependExtens
             $serializerConfig = array(
                 'metadata' => array(
                     'directories' => array(
-                        'DigitalAsceticBaseUserBundle' => array(
-                            'namespace_prefix' => 'DigitalAscetic\BaseUserBundle\Entity',
-                            'path' => '@DigitalAsceticBaseUserBundle/Resources/serializer',
+                        'EDCBaseUserBundle' => array(
+                            'namespace_prefix' => 'EDC\BaseUserBundle\Entity',
+                            'path' => '@EDCBaseUserBundle/Resources/serializer',
                         ),
                     ),
                 ),

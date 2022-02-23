@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Controller;
+namespace EDC\BaseUserBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,7 +42,7 @@ class SecurityController extends AbstractController
             : null;
 
         return $this->render(
-            '@DigitalAsceticBaseUser/Security/login.html.twig',
+            '@EDCBaseUser/Security/login.html.twig',
             [
                 'last_username' => $lastUsername,
                 'error' => $error,

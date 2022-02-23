@@ -1,14 +1,14 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Controller;
+namespace EDC\BaseUserBundle\Controller;
 
 
-use DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser;
-use DigitalAscetic\BaseUserBundle\Form\ResetPasswordRequestType;
-use DigitalAscetic\BaseUserBundle\Form\ResetPasswordType;
-use DigitalAscetic\BaseUserBundle\Service\ResetPasswordService;
-use DigitalAscetic\BaseUserBundle\Service\UserManagerInterface;
+use EDC\BaseUserBundle\Entity\AbstractBaseUser;
+use EDC\BaseUserBundle\Form\ResetPasswordRequestType;
+use EDC\BaseUserBundle\Form\ResetPasswordType;
+use EDC\BaseUserBundle\Service\ResetPasswordService;
+use EDC\BaseUserBundle\Service\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -43,7 +43,7 @@ class ResetController extends AbstractController
             }
         }
 
-        return $this->render('@DigitalAsceticBaseUser/Reset/reset_password.html.twig', ['form' => $form->createView()]);
+        return $this->render('@EDCBaseUser/Reset/reset_password.html.twig', ['form' => $form->createView()]);
     }
 
     public function resetPasswordConfirm(Request $request, string $token)
@@ -65,12 +65,12 @@ class ResetController extends AbstractController
 
             if ($user) {
                 $this->resetPasswordService->doResetUserPassword($user, $plainPassword);
-                $this->redirectToRoute('digital_ascetic_base_user_reset_password_request');
+                $this->redirectToRoute('edc_base_user_reset_password_request');
             }
         }
 
         return $this->render(
-            '@DigitalAsceticBaseUser/Reset/reset_password.html.twig',
+            '@EDCBaseUser/Reset/reset_password.html.twig',
             [
                 'form' => $form->createView(),
                 'error' => $error,

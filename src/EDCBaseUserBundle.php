@@ -1,15 +1,15 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle;
+namespace EDC\BaseUserBundle;
 
 
-use DigitalAscetic\BaseUserBundle\DependencyInjection\Compiler\UserCheckerCompilerPass;
+use EDC\BaseUserBundle\DependencyInjection\Compiler\UserCheckerCompilerPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class DigitalAsceticBaseUserBundle extends Bundle
+class EDCBaseUserBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {

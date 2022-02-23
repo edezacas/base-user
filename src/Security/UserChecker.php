@@ -1,10 +1,10 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Security;
+namespace EDC\BaseUserBundle\Security;
 
 
-use DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser;
+use EDC\BaseUserBundle\Entity\AbstractBaseUser;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserChecker implements UserCheckerInterface
 {
-    const SERVICE_NAME = 'digital_ascetic_base_user.security.user_checker';
+    const SERVICE_NAME = 'edc_base_user.security.user_checker';
 
     /** @var UserCheckerInterface */
     private $innerUserChecker;

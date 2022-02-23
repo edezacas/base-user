@@ -1,10 +1,10 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Tests\Functional;
+namespace EDC\BaseUserBundle\Tests\Functional;
 
 
-use DigitalAscetic\BaseUserBundle\Tests\Entity\TestUser;
+use EDC\BaseUserBundle\Tests\Entity\TestUser;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResetUserPasswordTest extends BaseTest
@@ -46,8 +46,8 @@ class ResetUserPasswordTest extends BaseTest
         // you can also pass an array of field values that overrides the default ones
         $form = $crawler->filter('form')->form(
             [
-                'ascetic_base_user_reset_password[password][first]' => '12345678',
-                'ascetic_base_user_reset_password[password][second]' => '12345678',
+                'edc_base_user_reset_password[password][first]' => '12345678',
+                'edc_base_user_reset_password[password][second]' => '12345678',
             ]
         );
 
@@ -76,7 +76,7 @@ class ResetUserPasswordTest extends BaseTest
         // you can also pass an array of field values that overrides the default ones
         $form = $crawler->filter('form')->form(
             [
-                'ascetic_base_user_reset_password_request[email]' => 'test@test.com',
+                'edc_base_user_reset_password_request[email]' => 'test@test.com',
             ]
         );
 

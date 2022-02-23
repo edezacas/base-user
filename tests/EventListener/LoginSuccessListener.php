@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Tests\EventListener;
+namespace EDC\BaseUserBundle\Tests\EventListener;
 
 
 use JMS\Serializer\SerializationContext;

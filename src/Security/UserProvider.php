@@ -1,11 +1,11 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Security;
+namespace EDC\BaseUserBundle\Security;
 
 
-use DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser;
-use DigitalAscetic\BaseUserBundle\Service\UserManagerInterface;
+use EDC\BaseUserBundle\Entity\AbstractBaseUser;
+use EDC\BaseUserBundle\Service\UserManagerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
-    const SERVICE_NAME = 'digital_ascetic_base_user.security.user_provider';
+    const SERVICE_NAME = 'edc_base_user.security.user_provider';
 
     /** @var UserManagerInterface */
     private $userManager;

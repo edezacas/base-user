@@ -1,8 +1,8 @@
 <?php
 
-namespace DigitalAscetic\BaseUserBundle\Tests;
+namespace EDC\BaseUserBundle\Tests;
 
-use DigitalAscetic\BaseUserBundle\DigitalAsceticBaseUserBundle;
+use EDC\BaseUserBundle\EDCBaseUserBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use JMS\SerializerBundle\JMSSerializerBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -28,7 +28,7 @@ class BaseUserTestKernel extends Kernel
             new SecurityBundle(),
             new TwigBundle(),
             new JMSSerializerBundle(),
-            new DigitalAsceticBaseUserBundle(),
+            new EDCBaseUserBundle(),
         ];
     }
 

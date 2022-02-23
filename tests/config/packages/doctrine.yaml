@@ -13,5 +13,5 @@ doctrine:
             base_user_test:
                 type: 'annotation'
                 dir: '%kernel.project_dir%/tests/Entity'
-                prefix: 'DigitalAscetic\BaseUserBundle\Tests\Entity'
+                prefix: 'EDC\BaseUserBundle\Tests\Entity'
                 is_bundle: false

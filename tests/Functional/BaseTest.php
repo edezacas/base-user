@@ -1,11 +1,11 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Tests\Functional;
+namespace EDC\BaseUserBundle\Tests\Functional;
 
 
-use DigitalAscetic\BaseUserBundle\Service\UserManagerInterface;
-use DigitalAscetic\BaseUserBundle\Tests\Entity\TestUser;
+use EDC\BaseUserBundle\Service\UserManagerInterface;
+use EDC\BaseUserBundle\Tests\Entity\TestUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

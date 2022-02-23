@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Service;
+namespace EDC\BaseUserBundle\Service;
 
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserPasswordEncoderService
 {
-    const SERVICE_NAME = 'digital_ascetic_base_user.service.password_encoder';
+    const SERVICE_NAME = 'edc_base_user.service.password_encoder';
 
     /** @var UserPasswordEncoderInterface */
     private $userPasswordEncoder;

@@ -6,8 +6,8 @@ services:
         public: false
 
     test.controller:
-        class: DigitalAscetic\BaseUserBundle\Test\Controller\TestController
+        class: EDC\BaseUserBundle\Test\Controller\TestController
 
     da_base_user.test.login.handler:
-        class: DigitalAscetic\BaseUserBundle\Tests\EventListener\LoginSuccessListener
+        class: EDC\BaseUserBundle\Tests\EventListener\LoginSuccessListener
         arguments: ['@jms_serializer']

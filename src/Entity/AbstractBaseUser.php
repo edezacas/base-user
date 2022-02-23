@@ -1,14 +1,14 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Entity;
+namespace EDC\BaseUserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class AbstractBaseUser
- * @package DigitalAscetic\BaseUserBundle\Entity
+ * @package EDC\BaseUserBundle\Entity
  */
 abstract class AbstractBaseUser implements UserInterface
 {

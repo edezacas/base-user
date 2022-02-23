@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Tests\Functional;
+namespace EDC\BaseUserBundle\Tests\Functional;
 
 
 use Symfony\Component\HttpFoundation\Response;
@@ -81,7 +81,7 @@ class BaseUserTest extends BaseTest
 
 
     /**
-     * Look at DigitalAscetic\BaseUserBundle\Tests\EventListener\LoginSuccessListener
+     * Look at EDC\BaseUserBundle\Tests\EventListener\LoginSuccessListener
      */
     public function testLoginAndSerializer()
     {

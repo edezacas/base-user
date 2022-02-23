@@ -1,17 +1,17 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Tests\Entity;
+namespace EDC\BaseUserBundle\Tests\Entity;
 
 
-use DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser;
+use EDC\BaseUserBundle\Entity\AbstractBaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 
 
 /**
  * Class TestUser
- * @package DigitalAscetic\BaseUserBundle\Tests\Entity
+ * @package EDC\BaseUserBundle\Tests\Entity
  *
  * @ORM\Table(name="test_user")
  * @ORM\Entity()

@@ -1,17 +1,17 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Service;
+namespace EDC\BaseUserBundle\Service;
 
 
-use DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser;
-use DigitalAscetic\BaseUserBundle\Event\BaseUserEvent;
+use EDC\BaseUserBundle\Entity\AbstractBaseUser;
+use EDC\BaseUserBundle\Event\BaseUserEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ResetPasswordService
 {
-    const SERVICE_NAME = 'digital_ascetic_base_user.service.reset_password';
+    const SERVICE_NAME = 'edc_base_user.service.reset_password';
 
     /** @var EntityManagerInterface */
     private $em;

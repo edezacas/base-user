@@ -5,6 +5,6 @@
         https://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="DigitalAscetic\BaseUserBundle\Service\UserManagerInterface" alias="digital_ascetic_base_user.service.user" public="false" />
+        <service id="EDC\BaseUserBundle\Service\UserManagerInterface" alias="edc_base_user.service.user" public="false" />
     </services>
 </container>

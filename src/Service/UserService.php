@@ -1,16 +1,16 @@
 <?php
 
 
-namespace DigitalAscetic\BaseUserBundle\Service;
+namespace EDC\BaseUserBundle\Service;
 
 
-use DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser;
+use EDC\BaseUserBundle\Entity\AbstractBaseUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserService implements UserManagerInterface
 {
-    const SERVICE_NAME = 'digital_ascetic_base_user.service.user';
+    const SERVICE_NAME = 'edc_base_user.service.user';
 
     /** @var EntityManagerInterface */
     private $em;

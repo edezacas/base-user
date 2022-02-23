@@ -1,11 +1,11 @@
-Digital Ascetic Base User
+EDC Base User
 =======
 
 This library provide basic abstract class to work with User entity.
 
 Also has implemented routes and services to handle login, logout and reset password.
 
-## DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser 
+## EDC\BaseUserBundle\Entity\AbstractBaseUser 
 
 This is the abstract class that you must extend from.
 
@@ -20,7 +20,7 @@ First of all create your own User class extending from AbstractBaseUser:
 namespace App\Entity;
 
 
-use DigitalAscetic\BaseUserBundle\Entity\AbstractBaseUser;
+use EDC\BaseUserBundle\Entity\AbstractBaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -40,7 +40,7 @@ class User extends AbstractBaseUser
 
 ### Reference
 
-#### config/packages/digital_ascetic_base_user.yaml:
+#### config/packages/edc_base_user.yaml:
 
 | Property        | Description           | Default  |
 | ------------- |:-------------:| -----:|
@@ -51,7 +51,7 @@ class User extends AbstractBaseUser
 Example: 
 
 ```yaml
-digital_ascetic_base_user:
+edc_base_user:
   user_class: 'App\Entity\User'
   firewall_name: 'main'
   user_enabled: true // User is enabled by default
@@ -64,14 +64,14 @@ You must import all BaseUser routes:
 
 ```yaml
 asc_base_user:
-  resource: "@DigitalAsceticBaseUserBundle/Resources/config/routes/all.xml"
+  resource: "@EDCBaseUserBundle/Resources/config/routes/all.xml"
 ```
 
 or for example if you don't want reset functionality you can only import:
 
 ```yaml
 asc_base_user:
-  resource: "@DigitalAsceticBaseUserBundle/Resources/config/routes/security.xml"
+  resource: "@EDCBaseUserBundle/Resources/config/routes/security.xml"
 ```
 
 ### Security
@@ -88,12 +88,12 @@ security:
       
   providers:
     base_user_provider:
-      id: DigitalAscetic\BaseUserBundle\Security\UserProvider
+      id: EDC\BaseUserBundle\Security\UserProvider
 ```
 
 ## Persisting User to Database
 
-To persist user we can simply use DigitalAscetic\BaseUserBundle\Service\UserManagerInterface *updateUser* method, that automatically handle encoding password and enabled behaviour.
+To persist user we can simply use EDC\BaseUserBundle\Service\UserManagerInterface *updateUser* method, that automatically handle encoding password and enabled behaviour.
 
 ### Example
 

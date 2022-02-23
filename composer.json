@@ -1,13 +1,13 @@
 {
-    "name": "digitalascetic/base-user",
+    "name": "edezacas/base-user",
     "version": "2.0.2",
     "type": "symfony-bundle",
-    "license": "proprietary",
-    "description": "Digital Ascetic Base User Bundle",
+    "license": "MIT",
+    "description": "Provides user management for your Symfony 5 project.",
     "authors": [
         {
             "name": "Eduard Deza",
-            "email": "ed@ascetic.io"
+            "email": "edezacas@gmail.com"
         }
     ],
     "minimum-stability": "dev",
@@ -34,12 +34,12 @@
     },
     "autoload": {
         "psr-4": {
-            "DigitalAscetic\\BaseUserBundle\\": "src/"
+            "EDC\\BaseUserBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DigitalAscetic\\BaseUserBundle\\Tests\\": "tests/"
+            "EDC\\BaseUserBundle\\Tests\\": "tests/"
         }
     }
 }

@@ -2,10 +2,10 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         base_user_provider:
-            id: DigitalAscetic\BaseUserBundle\Security\UserProvider
+            id: EDC\BaseUserBundle\Security\UserProvider
 
     encoders:
-        DigitalAscetic\BaseUserBundle\Tests\Entity\TestUser:
+        EDC\BaseUserBundle\Tests\Entity\TestUser:
             algorithm: auto
 
     firewalls:
