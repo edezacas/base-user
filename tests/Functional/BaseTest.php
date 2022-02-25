@@ -48,7 +48,7 @@ abstract class BaseTest extends WebTestCase
         $this->importDatabaseSchema();
 
         // gets the special container that allows fetching private services
-        $container = self::$container;
+        $container = static::getContainer();
 
         $this->userManager = $container->get(UserManagerInterface::class);
     }
