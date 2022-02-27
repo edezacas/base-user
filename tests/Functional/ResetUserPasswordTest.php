@@ -41,7 +41,7 @@ class ResetUserPasswordTest extends BaseTest
 
         $token = $user->getPasswordRequestToken();
 
-        $crawler = $client->request('GET', '/reset_password/confirm/'.$token);
+        $crawler = $client->request('GET', '/reset_password/confirm/' . $token);
 
         // you can also pass an array of field values that overrides the default ones
         $form = $crawler->filter('form')->form(
@@ -69,19 +69,13 @@ class ResetUserPasswordTest extends BaseTest
     private function requestResetPassword()
     {
         self::ensureKernelShutdown();
-        $client = self::createClient();
+        $client = static::createClient();
 
-        $crawler = $client->request('GET', '/reset_password');
+        $client->request('GET', '/reset_password');
 
-        // you can also pass an array of field values that overrides the default ones
-        $form = $crawler->filter('form')->form(
-            [
-                'edc_base_user_reset_password_request[email]' => 'test@test.com',
-            ]
-        );
-
-        // submit the Form object
-        $client->submit($form);
+        $client->submitForm('Send', [
+            'edc_base_user_reset_password_request[email]' => 'test@test.com',
+        ]);
 
         return $client;
     }

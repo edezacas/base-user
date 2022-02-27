@@ -14,8 +14,8 @@
     "prefer-stable": true,
     "require": {
         "php": ">=7.2.5",
+        "symfony/form": "^5.4",
         "symfony/framework-bundle": "^5.4",
-        "symfony/form": "*",
         "symfony/orm-pack": "*",
         "symfony/security-bundle": "*",
         "symfony/twig-bundle": "*"

@@ -10,6 +10,8 @@ use EDC\BaseUserBundle\Form\ResetPasswordType;
 use EDC\BaseUserBundle\Service\ResetPasswordService;
 use EDC\BaseUserBundle\Service\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
+use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResetController extends AbstractController
@@ -31,7 +33,11 @@ class ResetController extends AbstractController
 
     public function resetPasswordRequest(Request $request)
     {
-        $form = $this->createForm(ResetPasswordRequestType::class);
+        $formFactory = Forms::createFormFactoryBuilder()
+            ->addExtension(new HttpFoundationExtension())
+            ->getFormFactory();
+
+        $form = $formFactory->create(ResetPasswordRequestType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -43,7 +49,7 @@ class ResetController extends AbstractController
             }
         }
 
-        return $this->render('@EDCBaseUser/Reset/reset_password.html.twig', ['form' => $form->createView()]);
+        return $this->renderForm('@EDCBaseUser/Reset/reset_password.html.twig', ['form' => $form]);
     }
 
     public function resetPasswordConfirm(Request $request, string $token)
@@ -57,7 +63,12 @@ class ResetController extends AbstractController
             $error = 'USER_NOT_FOUND';
         }
 
-        $form = $this->createForm(ResetPasswordType::class);
+        $formFactory = Forms::createFormFactoryBuilder()
+            ->addExtension(new HttpFoundationExtension())
+            ->getFormFactory();
+
+        $form = $formFactory->create(ResetPasswordType::class);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -69,10 +80,10 @@ class ResetController extends AbstractController
             }
         }
 
-        return $this->render(
+        return $this->renderForm(
             '@EDCBaseUser/Reset/reset_password.html.twig',
             [
-                'form' => $form->createView(),
+                'form' => $form,
                 'error' => $error,
             ]
         );
