@@ -1,5 +1,14 @@
 # CHANGELOG
 
+2.4.0
+-----
+* Implemented command UpdateUserPassword.
+
+2.3.0
+-----
+* Added Travis.
+* Removed deprecations.
+
 2.0.2
 -----
 * Fixed login template form action login_check.

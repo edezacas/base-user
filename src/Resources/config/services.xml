@@ -5,6 +5,12 @@
         https://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="EDC\BaseUserBundle\Service\UserManagerInterface" alias="edc_base_user.service.user" public="false" />
+        <service id="EDC\BaseUserBundle\Service\UserManagerInterface" alias="edc_base_user.service.user"
+                 public="false"/>
+
+        <service id="EDC\BaseUserBundle\Command\UpdateUserPasswordCommand" public="false">
+            <argument type="service" id="edc_base_user.service.user"/>
+            <tag name="console.command"/>
+        </service>
     </services>
 </container>

@@ -82,9 +82,10 @@ asc_base_user:
 
 ```yaml
 security:
-  encoders:
-    App\Entity\User:
-      algorithm: auto
+  password_hashers:
+    # Use native password hasher, which auto-selects and migrates the best
+    # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
+    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
       
   providers:
     base_user_provider:
@@ -122,6 +123,12 @@ There are two events dispatched:
 * BaseUserEvent::USER_RESET_PASSWORD_REQUESTED when user has requested a new reset password; subscribing you can email to user
 * BaseUserEvent::USER_RESET_PASSWORD_SUCCESS when user has successfully reset password
 
+## Commands
+
+- Update User Password
+```php
+php bin/console edc_base_user:update-user-password $_USERNAME_OR_EMAIL $_PLAN_PASSWORD    
+```
 
 ## Extends
 
@@ -129,6 +136,8 @@ This bundle is compatible with JMSSerializerBundle, detecting if it's enabled an
 mappings to its configuration.
 
 ```
+EDC\BaseUserBundle\Entity\AbstractBaseUser:
+  properties:
     id:
       groups: [ id ]
       type: integer
@@ -144,6 +153,10 @@ mappings to its configuration.
     roles:
       groups: [ user.roles ]
       type: array
+    enabled:
+      groups: [ user.default ]
+      type: boolean
+
 ```
 
 ## Testing
