@@ -4,13 +4,14 @@
 namespace EDC\BaseUserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class AbstractBaseUser
  * @package EDC\BaseUserBundle\Entity
  */
-abstract class AbstractBaseUser implements UserInterface
+abstract class AbstractBaseUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
 
     /**

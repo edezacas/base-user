@@ -4,27 +4,28 @@
 namespace EDC\BaseUserBundle\Service;
 
 
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 class UserPasswordEncoderService
 {
     const SERVICE_NAME = 'edc_base_user.service.password_encoder';
 
-    /** @var UserPasswordEncoderInterface */
+    /** @var UserPasswordHasherInterface */
     private $userPasswordEncoder;
 
     /**
      * UserPasswordEncoderService constructor.
-     * @param UserPasswordEncoderInterface $userPasswordEncoder
+     * @param UserPasswordHasherInterface $userPasswordEncoder
      */
-    public function __construct(UserPasswordEncoderInterface $userPasswordEncoder)
+    public function __construct(UserPasswordHasherInterface $userPasswordEncoder)
     {
         $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
-    public function encodeUserPassword(UserInterface $user, $newPassword): string
+    public function encodeUserPassword(PasswordAuthenticatedUserInterface $user, $newPassword): string
     {
-        return $this->userPasswordEncoder->encodePassword($user, $newPassword);
+        return $this->userPasswordEncoder->hashPassword($user, $newPassword);
     }
 }

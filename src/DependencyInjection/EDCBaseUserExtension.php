@@ -39,7 +39,7 @@ class EDCBaseUserExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('edc_base_user.firewall_name', $firewallName);
 
         $passEncoderService = new Definition(UserPasswordEncoderService::class);
-        $passEncoderService->addArgument(new Reference('security.password_encoder'));
+        $passEncoderService->addArgument(new Reference('security.user_password_hasher'));
         $passEncoderService->addArgument($userClass);
         $container->setDefinition(UserPasswordEncoderService::SERVICE_NAME, $passEncoderService);
         $container->setAlias(UserPasswordEncoderService::class, UserPasswordEncoderService::SERVICE_NAME);
