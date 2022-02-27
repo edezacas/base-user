@@ -7,7 +7,7 @@ namespace EDC\BaseUserBundle\Security;
 use EDC\BaseUserBundle\Entity\AbstractBaseUser;
 use EDC\BaseUserBundle\Service\UserManagerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -39,7 +39,18 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         $user = $this->userManager->findUser($username);
 
         if (!$user) {
-            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
+            throw new UserNotFoundException(sprintf('Username "%s" does not exist.', $username));
+        }
+
+        return $user;
+    }
+
+    public function loadUserByIdentifier(string $identifier)
+    {
+        $user = $this->userManager->findUser($identifier);
+
+        if (!$user) {
+            throw new UserNotFoundException(sprintf('Username "%s" does not exist.', $identifier));
         }
 
         return $user;
@@ -56,7 +67,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         }
 
         if (null === $reloadedUser = $this->userManager->findUserBy(['id' => $user->getId()])) {
-            throw new UsernameNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
+            throw new UserNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
         }
 
         return $reloadedUser;

@@ -86,6 +86,16 @@ abstract class AbstractBaseUser implements UserInterface, PasswordAuthenticatedU
         return $this->username;
     }
 
+    /**
+     * @method string getUserIdentifier() returns the identifier for this user (e.g. its username or email address)
+     *
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
+    }
+
 
     /**
      * This method allow us to handle empty username field

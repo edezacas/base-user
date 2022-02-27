@@ -1,19 +1,21 @@
 security:
+    enable_authenticator_manager: true
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         base_user_provider:
             id: EDC\BaseUserBundle\Security\UserProvider
 
-    encoders:
-        EDC\BaseUserBundle\Tests\Entity\TestUser:
-            algorithm: auto
+    password_hashers:
+        # Use native password hasher, which auto-selects and migrates the best
+        # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
             lazy: true
             form_login:
                 login_path: /login
@@ -22,5 +24,5 @@ security:
                 failure_handler: da_base_user.test.login.handler
 
     access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$, role: PUBLIC_ACCESS }
+        - { path: ^/login_check$, role: PUBLIC_ACCESS }
