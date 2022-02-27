@@ -1,4 +1,4 @@
-EDC Base User
+EDC Base User[![Build Status](https://app.travis-ci.com/edezacas/base-user.svg?branch=master)](https://app.travis-ci.com/github/edezacas/base-user)
 =======
 
 This library provide basic abstract class to work with User entity.
