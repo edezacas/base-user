@@ -9,11 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ResetUserPasswordTest extends BaseTest
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testResetPasswordRequest()
     {
         $this->createUser();
@@ -41,18 +36,12 @@ class ResetUserPasswordTest extends BaseTest
 
         $token = $user->getPasswordRequestToken();
 
-        $crawler = $client->request('GET', '/reset_password/confirm/' . $token);
+        $client->request('GET', '/reset_password/confirm/' . $token);
 
-        // you can also pass an array of field values that overrides the default ones
-        $form = $crawler->filter('form')->form(
-            [
-                'edc_base_user_reset_password[password][first]' => '12345678',
-                'edc_base_user_reset_password[password][second]' => '12345678',
-            ]
-        );
-
-        // submit the Form object
-        $client->submit($form);
+        $client->submitForm('Submit', [
+            'edc_base_user_reset_password[password][first]' => '12345678',
+            'edc_base_user_reset_password[password][second]' => '12345678',
+        ]);
 
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
 
@@ -69,6 +58,7 @@ class ResetUserPasswordTest extends BaseTest
     private function requestResetPassword()
     {
         self::ensureKernelShutdown();
+
         $client = static::createClient();
 
         $client->request('GET', '/reset_password');

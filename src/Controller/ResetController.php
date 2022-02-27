@@ -13,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 class ResetController extends AbstractController
 {
@@ -23,12 +25,18 @@ class ResetController extends AbstractController
     /** @var ResetPasswordService */
     private $resetPasswordService;
 
+    /** @var Environment */
+    private $twig;
+
     public function __construct(
         UserManagerInterface $userManager,
-        ResetPasswordService $resetPasswordService
-    ) {
+        ResetPasswordService $resetPasswordService,
+        Environment          $twig
+    )
+    {
         $this->userManager = $userManager;
         $this->resetPasswordService = $resetPasswordService;
+        $this->twig = $twig;
     }
 
     public function resetPasswordRequest(Request $request)
@@ -49,7 +57,7 @@ class ResetController extends AbstractController
             }
         }
 
-        return $this->renderForm('@EDCBaseUser/Reset/reset_password.html.twig', ['form' => $form]);
+        return new Response($this->twig->render('@EDCBaseUser/Reset/reset_password.html.twig', ['form' => $form->createView()]));
     }
 
     public function resetPasswordConfirm(Request $request, string $token)
@@ -80,12 +88,12 @@ class ResetController extends AbstractController
             }
         }
 
-        return $this->renderForm(
+        return new Response($this->twig->render(
             '@EDCBaseUser/Reset/reset_password.html.twig',
             [
-                'form' => $form,
+                'form' => $form->createView(),
                 'error' => $error,
             ]
-        );
+        ));
     }
 }

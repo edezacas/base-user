@@ -1,6 +1,6 @@
 {
     "name": "edezacas/base-user",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "type": "symfony-bundle",
     "license": "MIT",
     "description": "Provides user management for your Symfony 5 project.",
@@ -13,7 +13,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.4",
         "symfony/form": "^5.4",
         "symfony/framework-bundle": "^5.4",
         "symfony/orm-pack": "*",

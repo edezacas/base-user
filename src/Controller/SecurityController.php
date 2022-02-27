@@ -5,8 +5,10 @@ namespace EDC\BaseUserBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Twig\Environment;
 
 class SecurityController extends AbstractController
 {
@@ -16,16 +18,23 @@ class SecurityController extends AbstractController
     /** @var AuthenticationUtils */
     private $authenticationUtils;
 
+    /** @var Environment */
+    private $twig;
+
     /**
      * SecurityController constructor.
      * @param AuthenticationUtils $authenticationUtils
+     * @param Environment $twig
      * @param CsrfTokenManagerInterface|null $csrfTokenManager
      */
     public function __construct(
-        AuthenticationUtils $authenticationUtils,
+        AuthenticationUtils       $authenticationUtils,
+        Environment               $twig,
         CsrfTokenManagerInterface $csrfTokenManager = null
-    ) {
+    )
+    {
         $this->authenticationUtils = $authenticationUtils;
+        $this->twig = $twig;
         $this->csrfTokenManager = $csrfTokenManager;
     }
 
@@ -41,14 +50,14 @@ class SecurityController extends AbstractController
             ? $this->csrfTokenManager->getToken('authenticate')->getValue()
             : null;
 
-        return $this->render(
+        return new Response($this->twig->render(
             '@EDCBaseUser/Security/login.html.twig',
             [
                 'last_username' => $lastUsername,
                 'error' => $error,
                 'csrfToken' => $csrfToken,
             ]
-        );
+        ));
     }
 
     public function check()

@@ -79,6 +79,7 @@ class EDCBaseUserExtension extends Extension implements PrependExtensionInterfac
             ->setPublic(true)
             ->addTag('controller.service_arguments')
             ->addArgument(new Reference('security.authentication_utils'))
+            ->addArgument(new Reference('twig'))
             ->addArgument(new Reference('security.csrf.token_manager', ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->addMethodCall('setContainer', [new Reference('service_container')]);
 
@@ -87,6 +88,7 @@ class EDCBaseUserExtension extends Extension implements PrependExtensionInterfac
             ->addTag('controller.service_arguments')
             ->addArgument(new Reference(UserService::SERVICE_NAME))
             ->addArgument(new Reference(ResetPasswordService::SERVICE_NAME))
+            ->addArgument(new Reference('twig'))
             ->addMethodCall('setContainer', [new Reference('service_container')]);
     }
 
